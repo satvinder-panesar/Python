@@ -1,0 +1,28 @@
+To run clustering algorithms:
+
+navigate to folder conatining this file.
+run main.py
+--------------------------------------------------------------------------------------
+To run mapreduce:
+
+Make input directory on HDFS:
+/hadoop-2.7.7/bin$ ./hdfs dfs -mkdir /input
+
+Place input files on HDFS:
+/hadoop-2.7.7/bin$ ./hdfs dfs -put /home/satvinder/workspace/kmeans/iyer.txt /input
+
+Paste jar file from ./kmeans_mapreduce/kmeans.jar to your desired location and execute map reduce
+/hadoop-2.7.7/bin$ ./hadoop jar <<path_to_kmeans.jar>> org.myorg.Kmeans hdfs:/input/iyer.txt hdfs:/output > <<log_file_path>
+Example:
+/hadoop-2.7.7/bin$ ./hadoop jar /home/satvinder/workspace/kmeans/kmeans.jar org.myorg.Kmeans hdfs:/input/iyer.txt hdfs:/output > /home/satvinder/logs
+
+To pass initail centroids use below command:
+/hadoop-2.7.7/bin$ ./hadoop jar /home/satvinder/workspace/kmeans/kmeans.jar org.myorg.Kmeans hdfs:/input/iyer.txt hdfs:/output 50,100,150,200,250 > /home/satvinder/logs
+
+To view output, open logs
+OR
+In last line of logs, copy output directory and append /part-00000 and get file from HDFS.
+/hadoop-2.7.7/bin$ ./hdfs dfs -get <<output_file_path_on_HDFS>> <<local_machine_path>>
+Example:
+/hadoop-2.7.7/bin$ ./hdfs dfs -get hdfs:/output154065484183510/part-00000 /home/satvinder/workspace/kmeans/outputs
+
